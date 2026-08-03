@@ -545,3 +545,293 @@ function closeProjectModal() {
         "";
 
 }
+
+/* =========================================
+   PROJECT DISCUSSION - CREATIVE MODAL
+========================================= */
+
+const projects = {
+
+    preschool: {
+        number: "01",
+        category: "DATABASE MANAGEMENT",
+        title: "Pre-Schooling Management System",
+
+        description:
+            "A database-driven management system designed to simplify and organize preschool student information. The system focuses on maintaining student records, enrollment information and related data in a structured and easily accessible way.",
+
+        highlights: [
+            "Student Information Management",
+            "Enrollment Record Management",
+            "Structured Database Storage",
+            "Easy Data Retrieval"
+        ],
+
+        technologies: [
+            "PHP",
+            "MySQL",
+            "HTML",
+            "CSS"
+        ]
+    },
+
+
+    musical: {
+        number: "02",
+        category: "WEB APPLICATION",
+        title: "Musical World System",
+
+        description:
+            "A web-based project created to organize and present musical information through a clean and user-friendly interface. The project focuses on structured information presentation and an engaging browsing experience.",
+
+        highlights: [
+            "User-Friendly Interface",
+            "Organized Musical Information",
+            "Responsive Web Design",
+            "Interactive Web Experience"
+        ],
+
+        technologies: [
+            "HTML",
+            "CSS",
+            "JavaScript"
+        ]
+    },
+
+
+    leaf: {
+        number: "03",
+        category: "AI & DEEP LEARNING",
+        title: "Leaf Identification and Information Retrieval",
+
+        description:
+            "A deep learning and Generative AI based project designed to identify plant leaves and provide relevant information about the identified plant. The system combines image classification with information retrieval to create a more informative user experience.",
+
+        highlights: [
+            "Leaf Image Identification",
+            "Deep Learning Classification",
+            "CNN-Based Analysis",
+            "Information Retrieval",
+            "Generative AI Integration"
+        ],
+
+        technologies: [
+            "Python",
+            "CNN",
+            "Deep Learning",
+            "Generative AI"
+        ]
+    }
+
+};
+
+
+/* =========================================
+   OPEN PROJECT MODAL
+========================================= */
+
+function openProject(project) {
+
+    const selectedProject = projects[project];
+
+    if (!selectedProject) {
+        return;
+    }
+
+
+    /* Create modal */
+
+    const modal = document.createElement("div");
+
+    modal.className = "project-modal";
+
+    modal.innerHTML = `
+
+        <div class="project-modal-backdrop"></div>
+
+        <div class="project-modal-card">
+
+            <button
+                class="project-modal-close"
+                aria-label="Close project details">
+
+                ×
+
+            </button>
+
+
+            <div class="project-modal-number">
+
+                ${selectedProject.number}
+
+            </div>
+
+
+            <div class="project-modal-category">
+
+                ${selectedProject.category}
+
+            </div>
+
+
+            <h2>
+
+                ${selectedProject.title}
+
+            </h2>
+
+
+            <div class="project-modal-line"></div>
+
+
+            <p class="project-modal-description">
+
+                ${selectedProject.description}
+
+            </p>
+
+
+            <h4>
+
+                Project Highlights
+
+            </h4>
+
+
+            <div class="project-highlights">
+
+                ${selectedProject.highlights.map(item => `
+                    
+                    <div class="highlight-item">
+
+                        <span class="highlight-icon">
+                            ✓
+                        </span>
+
+                        <span>
+                            ${item}
+                        </span>
+
+                    </div>
+
+                `).join("")}
+
+            </div>
+
+
+            <h4>
+
+                Technologies
+
+            </h4>
+
+
+            <div class="project-modal-tech">
+
+                ${selectedProject.technologies.map(tech => `
+                    
+                    <span>
+                        ${tech}
+                    </span>
+
+                `).join("")}
+
+            </div>
+
+
+            <div class="project-modal-footer">
+
+                <span>
+                    PROJECT ${selectedProject.number}
+                </span>
+
+                <span>
+                    VARSHA V
+                </span>
+
+            </div>
+
+        </div>
+    `;
+
+
+    document.body.appendChild(modal);
+
+
+    /* Prevent background scrolling */
+
+    document.body.style.overflow = "hidden";
+
+
+    /* Animate opening */
+
+    requestAnimationFrame(() => {
+
+        modal.classList.add("active");
+
+    });
+
+
+    /* Close button */
+
+    const closeButton =
+        modal.querySelector(".project-modal-close");
+
+
+    closeButton.addEventListener("click", () => {
+
+        closeProjectModal(modal);
+
+    });
+
+
+    /* Click outside modal */
+
+    modal.querySelector(".project-modal-backdrop")
+        .addEventListener("click", () => {
+
+            closeProjectModal(modal);
+
+        });
+
+
+    /* Escape key */
+
+    document.addEventListener(
+        "keydown",
+        function escapeHandler(event) {
+
+            if (event.key === "Escape") {
+
+                closeProjectModal(modal);
+
+                document.removeEventListener(
+                    "keydown",
+                    escapeHandler
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   CLOSE PROJECT MODAL
+========================================= */
+
+function closeProjectModal(modal) {
+
+    modal.classList.remove("active");
+
+    setTimeout(() => {
+
+        modal.remove();
+
+        document.body.style.overflow = "";
+
+    }, 400);
+
+}
